@@ -16,7 +16,8 @@ namespace Delimited
 
             for (var i = 0; i <= datas.Length - 3; i+=3)
             {
-                output.Append("\t{\r\n");
+                output.Append("\t{");
+                output.Append(Environment.NewLine);
                 for (var ii = 0; ii < 3; ii++)
                 {
                     var name = ii == 0 ? "Haida" : ii == 1 ? "Notes" : "Definition";
@@ -24,7 +25,7 @@ namespace Delimited
                     var d = datas[i + ii];
                     if (!string.IsNullOrWhiteSpace(d))
                     {
-                        d = d.Replace(Environment.NewLine, " - ").Replace('"'.ToString(), "\\\"").Trim(' ');
+                        d = d.Replace(Environment.NewLine, " - ").Replace('"'.ToString(), "\\\"");
                         while (d.Contains("\t"))
                         {
                             d = d.Replace("\t", " ");
@@ -33,6 +34,7 @@ namespace Delimited
                         {
                             d = d.Replace("  ", " ");
                         }
+                        d = d.Trim(' ');
                         output.AppendFormat("\t\t\"{0}\": \"{1}\"{2}{3}", name, d, eol, Environment.NewLine);
                     }
                 }
@@ -41,7 +43,7 @@ namespace Delimited
                 {
                     output.Append(',');
                 }
-                output.Append("\r\n");
+                output.Append(Environment.NewLine);
             }
 
             output.AppendFormat("]{0}", Environment.NewLine);
